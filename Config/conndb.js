@@ -14,7 +14,7 @@ const connectToDatabase = async () => {
         console.log(error.message);
         
         // Terminate the application process with an exit code of 1 if an error occurs
-        process.exit(1);
+        process.exit(1); 
     }
 }
 
