@@ -1,7 +1,10 @@
  const express = require("express")
  const dotenv = require("dotenv").config()
-
+const connectToDatabase = require("./Config/conndb")
  const app = express()
+
+//  connect database
+connectToDatabase();
 
 //  middlewares
 app.use(express.json())
