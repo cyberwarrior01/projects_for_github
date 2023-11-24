@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require("../Models/userModel")
+const User = require("../Models/userModel");
 
 // Route for register
-//  METHOD POST
+// METHOD POST
 // Controller for user registration
-const regsterUser = async (req, res) => {
+const registerUser = async (req, res) => {
   // Extracting user information from the request body
   const { username, email, password, cpassword } = req.body;
 
@@ -43,9 +43,6 @@ const regsterUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
-
 
 // Route for login
 // METHOD POST
@@ -95,16 +92,10 @@ const loginUser = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
 // Route for currentuser
 // METHOD GET
 const currentUser = async (req, res) => {
-  res.status(200).json({ message: "i am current_user api" });
+  res.status(200).json({ message: "I am current_user api" });
 };
- 
-module.exports = { regsterUser, loginUser, currentUser };
+
+module.exports = { registerUser, loginUser, currentUser };

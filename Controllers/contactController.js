@@ -6,7 +6,7 @@ const Contact = require("../Models/contactModel");
 const getcontacts = async (req, res) => {
   try {
     // Retrieve all contacts from the database
-    const data = await Contact.find({user_id: req.user._id});
+    const data = await Contact.find({ user_id: req.user._id });
 
     // Check if any contacts were found
     if (data.length === 0) {
@@ -78,7 +78,6 @@ const createcontact = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 
 // Function to handle PUT request for updating a contact by ID
 const updatecontact = async (req, res) => {
