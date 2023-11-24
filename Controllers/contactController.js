@@ -6,7 +6,7 @@ const Contact = require("../Models/contactModel");
 const getcontacts = async (req, res) => {
   try {
     // Retrieve all contacts from the database
-    const data = await Contact.find();
+    const data = await Contact.find({user_id: req.user._id});
 
     // Check if any contacts were found
     if (data.length === 0) {
@@ -54,32 +54,31 @@ const createcontact = async (req, res) => {
   try {
     // Check if required fields are provided
     if (!name || !email || !phone) {
-      return res.status(401).json({ message: "All fields are required" });
+      // Use 400 status for bad request
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     // Check if a contact with the same email already exists
     const existingContact = await Contact.findOne({ email });
 
     if (existingContact) {
-      return res
-        .status(400)
-        .json({ message: "Contact email is already saved" });
+      // Use 409 status for conflict (resource already exists)
+      return res.status(409).json({ message: "Contact email is already saved" });
     }
 
     // Creating a new instance of the Contact model
-    const newContact = new Contact({ name, email, phone });
+    const newContact = await Contact.create({ name, email, phone, user_id: req.user._id });
 
-    // Saving the new contact to the database
-    await newContact.save();
-
-    // Responding with a success message
-    res.status(200).json({ message: "Contact created successfully" });
+    // Responding with a success message and the created contact
+    res.status(201).json({ message: "Contact created successfully", newContact });
   } catch (error) {
     // Handle any potential errors during the process
     console.error(error);
+    // Use 500 status for internal server error
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 // Function to handle PUT request for updating a contact by ID
 const updatecontact = async (req, res) => {

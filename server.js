@@ -17,9 +17,10 @@ app.use(express.json());
 // Routes
 // Use the contactRoutes for any requests starting with "/api/contact"
 app.use("/api/contact", require("./Routes/contactRoutes"));
+app.use("/api/user", require("./Routes/userRoutes"));
 
 // Start the server and listen on the specified port from environment variables
-const port = process.env.PORT;
+const port = process.env.PORT;  
 app.listen(port, () => {
     console.log(`The server is on port ${port}`);
 });
